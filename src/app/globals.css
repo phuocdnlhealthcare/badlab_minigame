@@ -635,33 +635,330 @@ button {
   font-size: 20px;
 }
 
-.drawn-card__content {
-  display: flex;
-  justify-content: center;
+/* =========================================
+   DRAWN CARD
+========================================= */
 
-  margin-top: 20px;
+.drawn-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-top: 40px;
 }
 
+.drawn-card__header {
+  text-align: center;
+}
+
+.drawn-card__header span {
+  color: #a88dff;
+
+  font-size: 11px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.drawn-card__header h2 {
+  margin-top: 6px;
+
+  font-size: 20px;
+}
+
+
+/* =========================================
+   DRAW CARD STAGE
+========================================= */
+
+.drawn-card__stage {
+  position: relative;
+
+  width: 180px;
+
+  aspect-ratio: 2 / 3;
+
+  margin-top: 22px;
+
+  perspective: 1200px;
+}
+
+
+/* =========================================
+   PLACEHOLDER
+========================================= */
+
 .drawn-card__placeholder {
+  position: absolute;
+  inset: 0;
+
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: 170px;
+  border: 2px dashed
+    rgba(255, 255, 255, 0.12);
 
-  aspect-ratio: 2 / 3;
-
-  border: 2px dashed rgba(255, 255, 255, 0.12);
   border-radius: 18px;
 
-  background: rgba(255, 255, 255, 0.025);
+  background:
+    rgba(255, 255, 255, 0.025);
 }
 
 .drawn-card__placeholder span {
-  color: rgba(255, 255, 255, 0.15);
+  color:
+    rgba(255, 255, 255, 0.15);
 
   font-size: 54px;
   font-weight: 900;
+}
+
+
+/* =========================================
+   DRAW MOTION
+========================================= */
+
+.drawn-card__motion {
+  position: absolute;
+  inset: 0;
+
+  animation:
+    draw-card-move
+    var(--draw-duration)
+    cubic-bezier(
+      0.22,
+      1,
+      0.36,
+      1
+    )
+    both;
+}
+
+
+/* =========================================
+   FLIP CONTAINER
+========================================= */
+
+.drawn-card__flip {
+  position: relative;
+
+  width: 100%;
+  height: 100%;
+
+  transform-style:
+    preserve-3d;
+
+  animation:
+    draw-card-flip
+    var(--draw-duration)
+    ease-in-out
+    both;
+}
+
+
+/* =========================================
+   CARD FACES
+========================================= */
+
+.drawn-card__face {
+  position: absolute;
+  inset: 0;
+
+  width: 100%;
+  height: 100%;
+
+  backface-visibility:
+    hidden;
+
+  -webkit-backface-visibility:
+    hidden;
+}
+
+.drawn-card__face--front {
+  transform:
+    rotateY(180deg);
+}
+
+
+/*
+  Override width của Card
+  khi Card nằm trong stage.
+*/
+
+.drawn-card__face
+.playing-card,
+.drawn-card__revealed
+.playing-card {
+  width: 100%;
+  height: 100%;
+
+  aspect-ratio: auto;
+}
+
+
+/* =========================================
+   REVEALED CARD
+========================================= */
+
+.drawn-card__revealed {
+  position: absolute;
+  inset: 0;
+
+  animation:
+    revealed-card
+    220ms
+    ease-out
+    both;
+}
+
+
+/* =========================================
+   CARD MOVE ANIMATION
+========================================= */
+
+@keyframes draw-card-move {
+  /*
+    Card bắt đầu từ phía dưới
+    gần vị trí bộ bài.
+  */
+
+  0% {
+    transform:
+      translateY(220px)
+      scale(0.78);
+
+    opacity: 0;
+  }
+
+  12% {
+    opacity: 1;
+  }
+
+  /*
+    Bay tới giữa.
+  */
+
+  45% {
+    transform:
+      translateY(0)
+      scale(1);
+  }
+
+  100% {
+    transform:
+      translateY(0)
+      scale(1);
+
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   CARD FLIP ANIMATION
+========================================= */
+
+@keyframes draw-card-flip {
+  /*
+    Trong lúc card đang bay,
+    vẫn hiển thị mặt sau.
+  */
+
+  0%,
+  48% {
+    transform:
+      rotateY(0deg);
+  }
+
+  /*
+    Khi card tới giữa
+    thì bắt đầu flip.
+  */
+
+  78%,
+  100% {
+    transform:
+      rotateY(180deg);
+  }
+}
+
+
+/* =========================================
+   FINAL REVEAL
+========================================= */
+
+@keyframes revealed-card {
+  0% {
+    transform:
+      scale(0.96);
+
+    opacity: 0.8;
+  }
+
+  100% {
+    transform:
+      scale(1);
+
+    opacity: 1;
+  }
+}
+
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media (min-width: 768px) {
+  .drawn-card__stage {
+    width: 220px;
+  }
+}
+
+/* =========================================
+   CARD LEAVING STACK
+========================================= */
+
+.card-stack__item {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  width:
+    var(--deck-card-width);
+
+  margin: 0 auto;
+
+  transform-origin:
+    center center;
+}
+
+
+/*
+  Card được chọn vẫn còn
+  trong deck về mặt state,
+  nhưng fade khỏi stack
+  để tạo cảm giác đã được rút.
+*/
+
+.card-stack__item--drawing {
+  animation:
+    stack-card-leave
+    380ms
+    ease-out
+    100ms
+    forwards;
+}
+
+@keyframes stack-card-leave {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
 }
 
 /* =========================================

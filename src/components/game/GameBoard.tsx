@@ -4,72 +4,126 @@ import CardDeck from "@/components/game/CardDeck";
 import DrawnCard from "@/components/game/DrawnCard";
 import GameControls from "@/components/game/GameControls";
 
-import { GAME_CONFIG } from "@/constants/game";
-import { useCardGame } from "@/hooks/useCardGame";
+import {
+  GAME_CONFIG,
+} from "@/constants/game";
+
+import {
+  useCardGame,
+} from "@/hooks/useCardGame";
 
 export default function GameBoard() {
-    const {
-        deck,
-        drawnCard,
-        remainingCards,
-        isGameOver,
-        drawCard,
-        shuffleCards,
-    } = useCardGame();
+  const {
+    deck,
 
-    return (
-        <main className="game-page">
-            <div className="game-page__container">
-                {/* Header */}
-                <header className="game-header">
-                    <span className="game-header__badge">
-                        BADLAB MINIGAME
-                    </span>
+    selectedCard,
 
-                    <h1>Rút một lá bài</h1>
+    drawnCard,
 
-                    <p>
-                        Hãy thử vận may và khám phá lá bài
-                        dành cho bạn.
-                    </p>
-                </header>
+    phase,
 
-                {/* Game status */}
-                <div className="game-status">
-                    <span>Số bài còn lại</span>
+    remainingCards,
 
-                    <strong>
-                        {remainingCards}
-                        <small>
-                            /{GAME_CONFIG.TOTAL_CARDS}
-                        </small>
-                    </strong>
-                </div>
+    isDrawing,
 
-                {/* Card vừa rút */}
-                <DrawnCard card={drawnCard} />
+    canDraw,
 
-                {/* Controls */}
-                <GameControls
-                    onDraw={drawCard}
-                    onShuffle={shuffleCards}
-                    canDraw={!isGameOver}
-                />
+    canShuffle,
 
-                {/* Bộ bài */}
-                <div className="game-deck-section">
-                    <div className="game-deck-section__header">
-                        <h2>Bộ bài còn lại</h2>
+    drawCard,
 
-                        <span>
-                            {remainingCards}/
-                            {GAME_CONFIG.TOTAL_CARDS}
-                        </span>
-                    </div>
+    shuffleCards,
+  } = useCardGame();
 
-                    <CardDeck cards={deck} />
-                </div>
-            </div>
-        </main>
-    );
+  return (
+    <main className="game-page">
+      <div className="game-page__container">
+        <header className="game-header">
+          <span className="game-header__badge">
+            BADLAB MINIGAME
+          </span>
+
+          <h1>
+            Rút một lá bài
+          </h1>
+
+          <p>
+            Hãy thử vận may và
+            khám phá lá bài dành
+            cho bạn.
+          </p>
+        </header>
+
+        <div className="game-status">
+          <span>
+            Số bài còn lại
+          </span>
+
+          <strong>
+            {remainingCards}
+
+            <small>
+              /
+              {
+                GAME_CONFIG
+                  .TOTAL_CARDS
+              }
+            </small>
+          </strong>
+        </div>
+
+        <DrawnCard
+          selectedCard={
+            selectedCard
+          }
+          drawnCard={
+            drawnCard
+          }
+          phase={phase}
+          animationDuration={
+            GAME_CONFIG
+              .DRAW_ANIMATION_MS
+          }
+        />
+
+        <GameControls
+          onDraw={drawCard}
+          onShuffle={
+            shuffleCards
+          }
+          canDraw={canDraw}
+          canShuffle={
+            canShuffle
+          }
+          isDrawing={
+            isDrawing
+          }
+        />
+
+        <div className="game-deck-section">
+          <div className="game-deck-section__header">
+            <h2>
+              Bộ bài còn lại
+            </h2>
+
+            <span>
+              {remainingCards}/
+              {
+                GAME_CONFIG
+                  .TOTAL_CARDS
+              }
+            </span>
+          </div>
+
+          <CardDeck
+            cards={deck}
+            drawingCardId={
+              selectedCard?.id ??
+              null
+            }
+          />
+        </div>
+      </div>
+    </main>
+  );
 }
