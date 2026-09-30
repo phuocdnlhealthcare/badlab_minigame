@@ -25,16 +25,47 @@ export default function CardDeck({
   }
 
   return (
-    <section className="card-deck">
-      <div className="card-deck__grid">
-        {cards.map((card) => (
-          <Card
-            key={card.id}
-            card={card}
-            variant="back"
-          />
-        ))}
+    <section
+      className="card-deck"
+      aria-label={`Bộ bài còn ${cards.length} lá`}
+    >
+      <div className="card-stack">
+        {cards.map((card, index) => {
+          const offsetX = index * 0.55;
+          const offsetY = index * 0.35;
+
+          const rotation =
+            ((index % 5) - 2) * 0.3;
+
+          return (
+            <div
+              key={card.id}
+              className="card-stack__item"
+              style={{
+                zIndex: index + 1,
+                transform: `
+                  translate(
+                    ${offsetX}px,
+                    ${offsetY}px
+                  )
+                  rotate(${rotation}deg)
+                `,
+              }}
+            >
+              <Card
+                card={card}
+                variant="back"
+              />
+            </div>
+          );
+        })}
       </div>
+
+      <p className="card-stack__count">
+        Còn{" "}
+        <strong>{cards.length}</strong>{" "}
+        lá bài
+      </p>
     </section>
   );
 }

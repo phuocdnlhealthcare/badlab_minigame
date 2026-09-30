@@ -856,15 +856,6 @@ button {
   font-size: 13px;
 }
 
-.card-deck__grid {
-  display: grid;
-
-  grid-template-columns:
-    repeat(5, minmax(0, 1fr));
-
-  gap: 8px;
-}
-
 .card-deck--empty {
   display: flex;
   flex-direction: column;
@@ -917,6 +908,180 @@ button {
 
 
 /* =========================================
+   CARD DECK / CARD STACK
+========================================= */
+
+.card-deck {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+}
+
+
+/* =========================================
+   STACK CONTAINER
+========================================= */
+
+.card-stack {
+  --deck-card-width: 180px;
+
+  position: relative;
+
+  width: 100%;
+  height: calc(
+    var(--deck-card-width) * 1.5 + 30px
+  );
+
+  margin-top: 8px;
+}
+
+
+/* =========================================
+   EACH CARD IN STACK
+========================================= */
+
+.card-stack__item {
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+
+  width: var(--deck-card-width);
+
+  margin: 0 auto;
+
+  transform-origin: center center;
+
+  will-change: transform;
+}
+
+
+/* =========================================
+   CARD COUNTER
+========================================= */
+
+.card-stack__count {
+  margin-top: 18px;
+
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 13px;
+
+  text-align: center;
+}
+
+.card-stack__count strong {
+  color: #ffffff;
+
+  font-size: 15px;
+}
+
+
+/* =========================================
+   EMPTY DECK
+========================================= */
+
+.card-deck--empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+
+  padding: 48px 20px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 20px;
+
+  background: rgba(255, 255, 255, 0.025);
+
+  text-align: center;
+}
+
+.card-deck__empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 52px;
+  height: 52px;
+
+  margin-bottom: 16px;
+
+  border-radius: 50%;
+
+  background: rgba(116, 232, 173, 0.12);
+
+  color: #74e8ad;
+
+  font-size: 22px;
+  font-weight: 900;
+}
+
+.card-deck--empty h2 {
+  font-size: 20px;
+}
+
+.card-deck--empty p {
+  max-width: 340px;
+
+  margin-top: 8px;
+
+  color: rgba(255, 255, 255, 0.5);
+
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 599px) {
+  .card-stack {
+    --deck-card-width: 150px;
+
+    height: calc(
+      var(--deck-card-width) * 1.5 + 30px
+    );
+  }
+}
+
+
+/* =========================================
+   TABLET
+========================================= */
+
+@media (
+  min-width: 600px
+) and (
+  max-width: 899px
+) {
+  .card-stack {
+    --deck-card-width: 180px;
+  }
+}
+
+
+/* =========================================
+   DESKTOP
+========================================= */
+
+@media (min-width: 900px) {
+  .card-stack {
+    --deck-card-width: 210px;
+
+    height: calc(
+      var(--deck-card-width) * 1.5 + 35px
+    );
+  }
+}
+
+/* =========================================
    TABLET
 ========================================= */
 
@@ -926,12 +1091,6 @@ button {
     padding-right: 24px;
   }
 
-  .card-deck__grid {
-    grid-template-columns:
-      repeat(8, minmax(0, 1fr));
-
-    gap: 10px;
-  }
 }
 
 
@@ -942,13 +1101,6 @@ button {
 @media (min-width: 900px) {
   .game-page {
     padding-top: 60px;
-  }
-
-  .card-deck__grid {
-    grid-template-columns:
-      repeat(10, minmax(0, 1fr));
-
-    gap: 12px;
   }
 
   .playing-card--front {
@@ -970,7 +1122,4 @@ button {
     grid-template-columns: 1fr;
   }
 
-  .card-deck__grid {
-    gap: 6px;
-  }
 }

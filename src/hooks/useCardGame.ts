@@ -7,75 +7,75 @@ import { shuffleArray } from "@/utils/shuffle";
 import type { Card } from "@/types/card";
 
 interface CardGameState {
-  deck: Card[];
-  drawnCard: Card | null;
+    deck: Card[];
+    drawnCard: Card | null;
 }
 
 const initialGameState: CardGameState = {
-  deck: [...CARDS],
-  drawnCard: null,
+    deck: [...CARDS],
+    drawnCard: null,
 };
 
 export function useCardGame() {
-  const [gameState, setGameState] =
-    useState<CardGameState>(initialGameState);
+    const [gameState, setGameState] =
+        useState<CardGameState>(initialGameState);
 
-  /**
-   * Rút ngẫu nhiên 1 lá bài
-   */
-  const drawCard = () => {
-    setGameState((currentState) => {
-      const currentDeck = currentState.deck;
+    /**
+     * Rút ngẫu nhiên 1 lá bài
+     */
+    const drawCard = () => {
+        setGameState((currentState) => {
+            const currentDeck = currentState.deck;
 
-      // Không còn bài thì không xử lý
-      if (currentDeck.length === 0) {
-        return currentState;
-      }
+            // Không còn bài thì không xử lý
+            if (currentDeck.length === 0) {
+                return currentState;
+            }
 
-      // Random vị trí một lá bài
-      const randomIndex = Math.floor(
-        Math.random() * currentDeck.length
-      );
+            // Random vị trí một lá bài
+            const randomIndex = Math.floor(
+                Math.random() * currentDeck.length
+            );
 
-      // Lá bài được chọn
-      const selectedCard =
-        currentDeck[randomIndex];
+            // Lá bài được chọn
+            const selectedCard =
+                currentDeck[randomIndex];
 
-      // Xóa lá vừa rút khỏi bộ bài
-      const newDeck = currentDeck.filter(
-        (_, index) => index !== randomIndex
-      );
+            // Xóa lá vừa rút khỏi bộ bài
+            const newDeck = currentDeck.filter(
+                (_, index) => index !== randomIndex
+            );
 
-      return {
-        deck: newDeck,
-        drawnCard: selectedCard,
-      };
-    });
-  };
+            return {
+                deck: newDeck,
+                drawnCard: selectedCard,
+            };
+        });
+    };
 
-  /**
-   * Gom đủ 20 lá và xào lại
-   */
-  const shuffleCards = () => {
-    setGameState({
-      deck: shuffleArray(CARDS),
-      drawnCard: null,
-    });
-  };
+    /**
+     * Gom đủ 20 lá và xào lại
+     */
+    const shuffleCards = () => {
+        setGameState({
+            deck: shuffleArray(CARDS),
+            drawnCard: null,
+        });
+    };
 
-  return {
-    deck: gameState.deck,
+    return {
+        deck: gameState.deck,
 
-    drawnCard: gameState.drawnCard,
+        drawnCard: gameState.drawnCard,
 
-    remainingCards:
-      gameState.deck.length,
+        remainingCards:
+            gameState.deck.length,
 
-    isGameOver:
-      gameState.deck.length === 0,
+        isGameOver:
+            gameState.deck.length === 0,
 
-    drawCard,
+        drawCard,
 
-    shuffleCards,
-  };
+        shuffleCards,
+    };
 }
