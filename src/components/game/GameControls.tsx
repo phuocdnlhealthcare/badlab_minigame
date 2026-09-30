@@ -10,6 +10,8 @@ interface GameControlsProps {
   canShuffle: boolean;
 
   isDrawing: boolean;
+
+  isShuffling: boolean;
 }
 
 export default function GameControls({
@@ -18,7 +20,25 @@ export default function GameControls({
   canDraw,
   canShuffle,
   isDrawing,
+  isShuffling,
 }: GameControlsProps) {
+  const getDrawButtonText =
+    () => {
+      if (isDrawing) {
+        return "Đang rút...";
+      }
+
+      if (isShuffling) {
+        return "Đang xào...";
+      }
+
+      if (!canDraw) {
+        return "Đã hết bài";
+      }
+
+      return "Rút bài";
+    };
+
   return (
     <div className="game-controls">
       <Button
@@ -29,11 +49,7 @@ export default function GameControls({
           game-controls__button--draw
         "
       >
-        {isDrawing
-          ? "Đang rút..."
-          : canDraw
-            ? "Rút bài"
-            : "Đã hết bài"}
+        {getDrawButtonText()}
       </Button>
 
       <Button
@@ -44,7 +60,9 @@ export default function GameControls({
           game-controls__button--shuffle
         "
       >
-        Xào bài lại
+        {isShuffling
+          ? "Đang xào..."
+          : "Xào bài lại"}
       </Button>
     </div>
   );

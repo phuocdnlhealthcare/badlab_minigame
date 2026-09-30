@@ -26,6 +26,8 @@ export default function GameBoard() {
 
     isDrawing,
 
+    isShuffling,
+
     canDraw,
 
     canShuffle,
@@ -48,15 +50,16 @@ export default function GameBoard() {
           </h1>
 
           <p>
-            Hãy thử vận may và
-            khám phá lá bài dành
-            cho bạn.
+            Hãy thử vận may và khám phá
+            lá bài dành cho bạn.
           </p>
         </header>
 
         <div className="game-status">
           <span>
-            Số bài còn lại
+            {isShuffling
+              ? "Đang xào bài"
+              : "Số bài còn lại"}
           </span>
 
           <strong>
@@ -98,12 +101,15 @@ export default function GameBoard() {
           isDrawing={
             isDrawing
           }
+          isShuffling={
+            isShuffling
+          }
         />
 
         <div className="game-deck-section">
           <div className="game-deck-section__header">
             <h2>
-              Bộ bài còn lại
+              Bộ bài
             </h2>
 
             <span>
@@ -120,6 +126,13 @@ export default function GameBoard() {
             drawingCardId={
               selectedCard?.id ??
               null
+            }
+            isShuffling={
+              isShuffling
+            }
+            shuffleDuration={
+              GAME_CONFIG
+                .SHUFFLE_ANIMATION_MS
             }
           />
         </div>

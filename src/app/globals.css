@@ -1236,7 +1236,7 @@ button {
 
 
 /* =========================================
-   EACH CARD IN STACK
+   CARD STACK ITEM
 ========================================= */
 
 .card-stack__item {
@@ -1246,15 +1246,173 @@ button {
   left: 0;
   right: 0;
 
-  width: var(--deck-card-width);
+  width:
+    var(--deck-card-width);
 
   margin: 0 auto;
 
-  transform-origin: center center;
+  transform:
+    translate(
+      var(--stack-x),
+      var(--stack-y)
+    )
+    rotate(
+      var(--stack-rotation)
+    );
 
-  will-change: transform;
+  transform-origin:
+    center center;
+
+  will-change:
+    transform,
+    opacity;
 }
 
+/* =========================================
+   SHUFFLE ANIMATION
+========================================= */
+
+.card-stack__item--shuffling {
+  animation:
+    shuffle-card
+    var(--shuffle-duration)
+    cubic-bezier(
+      0.4,
+      0,
+      0.2,
+      1
+    )
+    both;
+
+  pointer-events: none;
+}
+
+@keyframes shuffle-card {
+  /*
+    Ban đầu:
+    tất cả card nằm trong stack.
+  */
+
+  0% {
+    transform:
+      translate(
+        var(--stack-x),
+        var(--stack-y)
+      )
+      rotate(
+        var(--stack-rotation)
+      );
+  }
+
+  /*
+    PHASE 1
+    --------
+    Tỏa các card sang trái/phải.
+  */
+
+  20% {
+    transform:
+      translate(
+        var(--shuffle-x-1),
+        var(--shuffle-y-1)
+      )
+      rotate(
+        var(--shuffle-r-1)
+      );
+  }
+
+  /*
+    PHASE 2
+    --------
+    Card đổi bên / đan chéo.
+  */
+
+  43% {
+    transform:
+      translate(
+        var(--shuffle-x-2),
+        var(--shuffle-y-2)
+      )
+      rotate(
+        var(--shuffle-r-2)
+      );
+  }
+
+  /*
+    PHASE 3
+    --------
+    Tỏa lại nhẹ lần nữa
+    để tạo cảm giác đang trộn.
+  */
+
+  64% {
+    transform:
+      translate(
+        var(--shuffle-x-1),
+        calc(
+          var(--shuffle-y-1)
+          * -0.5
+        )
+      )
+      rotate(
+        var(--shuffle-r-1)
+      );
+  }
+
+  /*
+    PHASE 4
+    --------
+    Tiến gần về stack.
+  */
+
+  82% {
+    transform:
+      translate(
+        var(--shuffle-x-3),
+        var(--shuffle-y-3)
+      )
+      rotate(
+        var(--shuffle-r-3)
+      );
+  }
+
+  /*
+    Kết thúc:
+    gom toàn bộ lại.
+  */
+
+  100% {
+    transform:
+      translate(
+        var(--stack-x),
+        var(--stack-y)
+      )
+      rotate(
+        var(--stack-rotation)
+      );
+  }
+}
+
+.drawn-card__placeholder--shuffling
+span {
+  animation:
+    shuffle-icon
+    700ms
+    linear
+    infinite;
+}
+
+@keyframes shuffle-icon {
+  from {
+    transform:
+      rotate(0deg);
+  }
+
+  to {
+    transform:
+      rotate(360deg);
+  }
+}
 
 /* =========================================
    CARD COUNTER

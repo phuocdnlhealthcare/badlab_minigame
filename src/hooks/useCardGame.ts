@@ -6,24 +6,24 @@ import {
     useState,
 } from "react";
 
-import { CARDS } from "@/data/cards";
 import { GAME_CONFIG } from "@/constants/game";
-import { shuffleArray } from "@/utils/shuffle";
-
+import { CARDS } from "@/data/cards";
 import type { Card } from "@/types/card";
+import { shuffleArray } from "@/utils/shuffle";
 
 export type GamePhase =
     | "idle"
     | "drawing"
-    | "revealed";
+    | "revealed"
+    | "shuffling";
 
 interface CardGameState {
     deck: Card[];
 
-    // Card đang chạy animation
+    // Lá đang chạy animation rút
     selectedCard: Card | null;
 
-    // Card đã hoàn thành animation
+    // Lá đã reveal hoàn chỉnh
     drawnCard: Card | null;
 
     phase: GamePhase;
@@ -43,16 +43,13 @@ export function useCardGame() {
         );
 
     /**
-     * Khóa thao tác trong lúc animation chạy.
-     *
-     * Dùng ref để chặn ngay cả trường hợp
-     * user double click quá nhanh trước khi React render lại.
+     * Lock dùng để chặn double click / spam button.
      */
-    const drawingLockRef =
+    const interactionLockRef =
         useRef(false);
 
     /**
-     * Lưu timer để cleanup khi component unmount.
+     * Timer của animation rút bài.
      */
     const drawTimerRef =
         useRef<ReturnType<
@@ -60,7 +57,15 @@ export function useCardGame() {
         > | null>(null);
 
     /**
-     * Cleanup timer khi rời trang.
+     * Timer của animation xào bài.
+     */
+    const shuffleTimerRef =
+        useRef<ReturnType<
+            typeof setTimeout
+        > | null>(null);
+
+    /**
+     * Cleanup timer khi rời khỏi trang.
      */
     useEffect(() => {
         return () => {
@@ -69,27 +74,33 @@ export function useCardGame() {
                     drawTimerRef.current
                 );
             }
+
+            if (shuffleTimerRef.current) {
+                clearTimeout(
+                    shuffleTimerRef.current
+                );
+            }
         };
     }, []);
 
     /**
-     * Bắt đầu rút bài.
+     * ================================
+     * DRAW CARD
+     * ================================
      */
     const drawCard = () => {
-        // Đang rút thì không cho rút tiếp
-        if (drawingLockRef.current) {
+        if (interactionLockRef.current) {
             return;
         }
 
-        // Không còn bài
         if (gameState.deck.length === 0) {
             return;
         }
 
-        drawingLockRef.current = true;
+        interactionLockRef.current = true;
 
         /**
-         * Random một vị trí trong deck.
+         * Random một lá trong deck.
          */
         const randomIndex = Math.floor(
             Math.random() *
@@ -100,10 +111,9 @@ export function useCardGame() {
             gameState.deck[randomIndex];
 
         /**
-         * Chuyển state sang drawing.
+         * Bắt đầu animation.
          *
-         * Lưu ý:
-         * chưa remove card khỏi deck ở đây.
+         * Chưa remove card khỏi deck.
          */
         setGameState(
             (currentState) => ({
@@ -111,7 +121,6 @@ export function useCardGame() {
 
                 selectedCard,
 
-                // Xóa card reveal trước đó
                 drawnCard: null,
 
                 phase: "drawing",
@@ -119,16 +128,12 @@ export function useCardGame() {
         );
 
         /**
-         * Chờ animation hoàn thành.
+         * Animation kết thúc.
          */
         drawTimerRef.current =
             setTimeout(() => {
                 setGameState(
                     (currentState) => ({
-                        /**
-                         * Lúc này mới thật sự
-                         * remove card khỏi deck.
-                         */
                         deck:
                             currentState.deck.filter(
                                 (card) =>
@@ -138,17 +143,14 @@ export function useCardGame() {
 
                         selectedCard: null,
 
-                        /**
-                         * Card chính thức
-                         * được reveal.
-                         */
-                        drawnCard: selectedCard,
+                        drawnCard:
+                            selectedCard,
 
                         phase: "revealed",
                     })
                 );
 
-                drawingLockRef.current =
+                interactionLockRef.current =
                     false;
 
                 drawTimerRef.current =
@@ -157,27 +159,68 @@ export function useCardGame() {
     };
 
     /**
-     * Gom đủ 20 lá và reset game.
+     * ================================
+     * SHUFFLE CARDS
+     * ================================
      */
     const shuffleCards = () => {
-        /**
-         * Không cho reset trong khi
-         * đang animation.
-         */
-        if (drawingLockRef.current) {
+        if (interactionLockRef.current) {
             return;
         }
 
+        interactionLockRef.current = true;
+
+        /**
+         * Khi user bấm xào bài:
+         *
+         * 1. Gom đủ lại 20 lá
+         * 2. Clear card đang reveal
+         * 3. Chuyển phase thành shuffling
+         *
+         * Lúc này UI sẽ render đủ 20 card
+         * và chạy animation.
+         */
         setGameState({
-            deck: shuffleArray(CARDS),
+            deck: [...CARDS],
 
             selectedCard: null,
 
             drawnCard: null,
 
-            phase: "idle",
+            phase: "shuffling",
         });
+
+        /**
+         * Sau khi animation xào kết thúc,
+         * mới thật sự đổi thứ tự deck.
+         */
+        shuffleTimerRef.current =
+            setTimeout(() => {
+                setGameState({
+                    deck: shuffleArray(
+                        CARDS
+                    ),
+
+                    selectedCard: null,
+
+                    drawnCard: null,
+
+                    phase: "idle",
+                });
+
+                interactionLockRef.current =
+                    false;
+
+                shuffleTimerRef.current =
+                    null;
+            }, GAME_CONFIG.SHUFFLE_ANIMATION_MS);
     };
+
+    /**
+     * ================================
+     * DERIVED STATE
+     * ================================
+     */
 
     const remainingCards =
         gameState.deck.length;
@@ -185,18 +228,25 @@ export function useCardGame() {
     const isDrawing =
         gameState.phase === "drawing";
 
+    const isShuffling =
+        gameState.phase === "shuffling";
+
+    const isBusy =
+        isDrawing || isShuffling;
+
     const isGameOver =
         remainingCards === 0;
 
     const canDraw =
-        !isDrawing &&
+        !isBusy &&
         remainingCards > 0;
 
     const canShuffle =
-        !isDrawing;
+        !isBusy;
 
     return {
-        deck: gameState.deck,
+        deck:
+            gameState.deck,
 
         selectedCard:
             gameState.selectedCard,
@@ -204,11 +254,16 @@ export function useCardGame() {
         drawnCard:
             gameState.drawnCard,
 
-        phase: gameState.phase,
+        phase:
+            gameState.phase,
 
         remainingCards,
 
         isDrawing,
+
+        isShuffling,
+
+        isBusy,
 
         isGameOver,
 

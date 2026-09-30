@@ -38,6 +38,10 @@ export default function DrawnCard({
     } as CSSProperties;
 
     const getTitle = () => {
+        if (phase === "shuffling") {
+            return "Đang xào bộ bài...";
+        }
+
         if (phase === "drawing") {
             return "Đang rút bài...";
         }
@@ -71,11 +75,28 @@ export default function DrawnCard({
             >
                 {/* IDLE */}
 
-                {phase === "idle" && (
-                    <div className="drawn-card__placeholder">
-                        <span>?</span>
-                    </div>
-                )}
+                {(
+                    phase === "idle" ||
+                    phase === "shuffling"
+                ) && (
+                        <div
+                            className={[
+                                "drawn-card__placeholder",
+
+                                phase === "shuffling"
+                                    ? "drawn-card__placeholder--shuffling"
+                                    : "",
+                            ]
+                                .filter(Boolean)
+                                .join(" ")}
+                        >
+                            <span>
+                                {phase === "shuffling"
+                                    ? "↻"
+                                    : "?"}
+                            </span>
+                        </div>
+                    )}
 
                 {/* DRAWING */}
 

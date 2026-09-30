@@ -6,6 +6,7 @@ export const GAME_ROUTES = {
 export const GAME_CONFIG = {
   TOTAL_CARDS: 20,
 
-  // Thời gian hoàn thành animation rút + flip
   DRAW_ANIMATION_MS: 1400,
+
+  SHUFFLE_ANIMATION_MS: 1800,
 } as const;
