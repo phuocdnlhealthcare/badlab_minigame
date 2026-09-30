@@ -1,25 +1,53 @@
-import Image from "next/image";
+'use client';
+import Button from "@/components/common/Button";
+import { GAME_CONFIG, GAME_ROUTES } from "@/constants/game";
 
-function Logo() {
+export default function HomePage() {
   return (
-    <Image
-      src="/logo.svg"
-      alt="Logo"
-      width={100}
-      height={100}
-      className="mb-8"
-    />
-  );
-}
-export default function Home() {
-  return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Logo />
-        <p className="text-lg text-zinc-600 dark:text-zinc-400">
-          Welcome to the Badlab Minigame
+    <main className="home">
+      <div className="home__background" />
+
+      <section className="home__content">
+        <div className="home__badge">
+          BADLAB MINIGAME
+        </div>
+
+        <h1 className="home__title">
+          RÚT MỘT LÁ
+          <span>KHÁM PHÁ ĐIỀU BẤT NGỜ</span>
+        </h1>
+
+        <p className="home__description">
+          Bộ bài gồm {GAME_CONFIG.TOTAL_CARDS} lá.
+          Hãy bắt đầu trò chơi và khám phá lá bài
+          dành cho bạn.
         </p>
-      </main>
-    </div>
+
+        <Button
+          href={GAME_ROUTES.GAME}
+          className="home__start-button"
+          ariaLabel="Bắt đầu chơi minigame"
+        >
+          Bắt đầu chơi
+        </Button>
+
+        <p className="home__hint">
+          Nhấn nút để bắt đầu
+        </p>
+      </section>
+
+      <div
+        className="home__cards"
+        aria-hidden="true"
+      >
+        <div className="home-card home-card--left" />
+
+        <div className="home-card home-card--center">
+          <span>?</span>
+        </div>
+
+        <div className="home-card home-card--right" />
+      </div>
+    </main>
   );
 }
