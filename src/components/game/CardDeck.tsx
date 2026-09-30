@@ -16,6 +16,11 @@ interface CardDeckProps {
     isShuffling?: boolean;
 
     shuffleDuration?: number;
+
+    registerCardRef?: (
+        cardId: number,
+        element: HTMLDivElement | null
+    ) => void;
 }
 
 type CardStackStyle =
@@ -47,6 +52,7 @@ export default function CardDeck({
     drawingCardId,
     isShuffling = false,
     shuffleDuration = 1800,
+    registerCardRef,
 }: CardDeckProps) {
     if (cards.length === 0) {
         return (
@@ -87,9 +93,6 @@ export default function CardDeck({
                             card.id ===
                             drawingCardId;
 
-                        /**
-                         * Vị trí stack bình thường.
-                         */
                         const stackX =
                             index * 0.55;
 
@@ -100,29 +103,15 @@ export default function CardDeck({
                             ((index % 5) - 2) *
                             0.3;
 
-                        /**
-                         * Chia card luân phiên:
-                         *
-                         * chẵn → trái
-                         * lẻ → phải
-                         */
                         const direction =
                             index % 2 === 0
                                 ? -1
                                 : 1;
 
-                        /**
-                         * Mỗi card tỏa ra
-                         * khoảng cách hơi khác nhau.
-                         */
                         const spread =
                             45 +
                             (index % 5) * 11;
 
-                        /**
-                         * Phase 1:
-                         * tỏa sang hai bên.
-                         */
                         const shuffleX1 =
                             direction * spread;
 
@@ -134,10 +123,6 @@ export default function CardDeck({
                             direction *
                             (5 + (index % 5) * 2);
 
-                        /**
-                         * Phase 2:
-                         * các lá đi ngược qua nhau.
-                         */
                         const shuffleX2 =
                             -direction *
                             spread *
@@ -151,10 +136,6 @@ export default function CardDeck({
                             -direction *
                             (4 + (index % 4) * 2);
 
-                        /**
-                         * Phase 3:
-                         * tiến dần trở lại stack.
-                         */
                         const shuffleX3 =
                             direction *
                             spread *
@@ -167,7 +148,7 @@ export default function CardDeck({
                         const shuffleR3 =
                             direction * 3;
 
-                        const cardStyle:
+                        const style:
                             CardStackStyle = {
                             "--stack-x":
                                 `${stackX}px`,
@@ -207,8 +188,7 @@ export default function CardDeck({
 
                             zIndex:
                                 isDrawingCard
-                                    ? cards.length +
-                                    20
+                                    ? cards.length + 20
                                     : index + 1,
                         };
 
@@ -229,12 +209,16 @@ export default function CardDeck({
                         return (
                             <div
                                 key={card.id}
+                                ref={(element) => {
+                                    registerCardRef?.(
+                                        card.id,
+                                        element
+                                    );
+                                }}
                                 className={
                                     classNames
                                 }
-                                style={
-                                    cardStyle
-                                }
+                                style={style}
                             >
                                 <Card
                                     card={card}

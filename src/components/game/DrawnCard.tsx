@@ -1,5 +1,6 @@
 import type {
     CSSProperties,
+    RefObject,
 } from "react";
 
 import Card from "@/components/game/Card";
@@ -12,6 +13,10 @@ import type {
     GamePhase,
 } from "@/hooks/useCardGame";
 
+import type {
+    ElementMotion,
+} from "@/utils/getElementMotion";
+
 interface DrawnCardProps {
     selectedCard: CardType | null;
 
@@ -20,22 +25,54 @@ interface DrawnCardProps {
     phase: GamePhase;
 
     animationDuration: number;
+
+    stageRef:
+    RefObject<HTMLDivElement | null>;
+
+    drawMotion:
+    ElementMotion | null;
 }
+
+type DrawAnimationStyle =
+    CSSProperties & {
+        "--draw-duration": string;
+
+        "--draw-from-x": string;
+
+        "--draw-from-y": string;
+
+        "--draw-from-scale": number;
+    };
 
 export default function DrawnCard({
     selectedCard,
     drawnCard,
     phase,
     animationDuration,
+    stageRef,
+    drawMotion,
 }: DrawnCardProps) {
-    /**
-     * Truyền duration từ TS sang CSS
-     * thông qua CSS custom property.
-     */
-    const animationStyle = {
+    const motion =
+        drawMotion ?? {
+            x: 0,
+            y: 180,
+            scale: 0.8,
+        };
+
+    const animationStyle:
+        DrawAnimationStyle = {
         "--draw-duration":
             `${animationDuration}ms`,
-    } as CSSProperties;
+
+        "--draw-from-x":
+            `${motion.x}px`,
+
+        "--draw-from-y":
+            `${motion.y}px`,
+
+        "--draw-from-scale":
+            motion.scale,
+    };
 
     const getTitle = () => {
         if (phase === "shuffling") {
@@ -66,19 +103,19 @@ export default function DrawnCard({
                     LÁ BÀI CỦA BẠN
                 </span>
 
-                <h2>{getTitle()}</h2>
+                <h2>
+                    {getTitle()}
+                </h2>
             </div>
 
             <div
+                ref={stageRef}
                 className="drawn-card__stage"
                 style={animationStyle}
             >
-                {/* IDLE */}
-
-                {(
-                    phase === "idle" ||
-                    phase === "shuffling"
-                ) && (
+                {(phase === "idle" ||
+                    phase ===
+                    "shuffling") && (
                         <div
                             className={[
                                 "drawn-card__placeholder",
@@ -98,14 +135,10 @@ export default function DrawnCard({
                         </div>
                     )}
 
-                {/* DRAWING */}
-
                 {phase === "drawing" &&
                     selectedCard && (
                         <div className="drawn-card__motion">
                             <div className="drawn-card__flip">
-                                {/* BACK FACE */}
-
                                 <div
                                     className="
                     drawn-card__face
@@ -119,8 +152,6 @@ export default function DrawnCard({
                                         variant="back"
                                     />
                                 </div>
-
-                                {/* FRONT FACE */}
 
                                 <div
                                     className="
@@ -138,8 +169,6 @@ export default function DrawnCard({
                             </div>
                         </div>
                     )}
-
-                {/* REVEALED */}
 
                 {phase === "revealed" &&
                     drawnCard && (

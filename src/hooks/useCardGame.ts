@@ -88,20 +88,17 @@ export function useCardGame() {
      * DRAW CARD
      * ================================
      */
-    const drawCard = () => {
+    const drawCard = (): Card | null => {
         if (interactionLockRef.current) {
-            return;
+            return null;
         }
 
         if (gameState.deck.length === 0) {
-            return;
+            return null;
         }
 
         interactionLockRef.current = true;
 
-        /**
-         * Random một lá trong deck.
-         */
         const randomIndex = Math.floor(
             Math.random() *
             gameState.deck.length
@@ -110,11 +107,6 @@ export function useCardGame() {
         const selectedCard =
             gameState.deck[randomIndex];
 
-        /**
-         * Bắt đầu animation.
-         *
-         * Chưa remove card khỏi deck.
-         */
         setGameState(
             (currentState) => ({
                 ...currentState,
@@ -127,9 +119,6 @@ export function useCardGame() {
             })
         );
 
-        /**
-         * Animation kết thúc.
-         */
         drawTimerRef.current =
             setTimeout(() => {
                 setGameState(
@@ -156,6 +145,13 @@ export function useCardGame() {
                 drawTimerRef.current =
                     null;
             }, GAME_CONFIG.DRAW_ANIMATION_MS);
+
+        /*
+         * Quan trọng:
+         * GameBoard sẽ dùng card này
+         * để tìm DOM element tương ứng.
+         */
+        return selectedCard;
     };
 
     /**

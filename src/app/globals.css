@@ -133,27 +133,19 @@ button {
   z-index: -3;
 
   background:
-    radial-gradient(
-      circle at 50% 15%,
+    radial-gradient(circle at 50% 15%,
       rgba(96, 70, 255, 0.35),
-      transparent 40%
-    ),
-    radial-gradient(
-      circle at 15% 80%,
+      transparent 40%),
+    radial-gradient(circle at 15% 80%,
       rgba(219, 44, 255, 0.18),
-      transparent 35%
-    ),
-    radial-gradient(
-      circle at 90% 70%,
+      transparent 35%),
+    radial-gradient(circle at 90% 70%,
       rgba(31, 110, 255, 0.18),
-      transparent 35%
-    ),
-    linear-gradient(
-      180deg,
+      transparent 35%),
+    linear-gradient(180deg,
       #15102a 0%,
       #090b18 55%,
-      #050711 100%
-    );
+      #050711 100%);
 }
 
 .home::before {
@@ -237,12 +229,10 @@ button {
 
   letter-spacing: 1px;
 
-  background: linear-gradient(
-    90deg,
-    #f9ca6b,
-    #ff82da,
-    #9584ff
-  );
+  background: linear-gradient(90deg,
+      #f9ca6b,
+      #ff82da,
+      #9584ff);
 
   background-clip: text;
   -webkit-background-clip: text;
@@ -274,12 +264,10 @@ button {
 
   border-radius: 999px;
 
-  background: linear-gradient(
-    135deg,
-    #8258ff 0%,
-    #ab5dff 50%,
-    #e35ec8 100%
-  );
+  background: linear-gradient(135deg,
+      #8258ff 0%,
+      #ab5dff 50%,
+      #e35ec8 100%);
 
   box-shadow:
     0 15px 40px rgba(133, 81, 255, 0.35),
@@ -335,16 +323,12 @@ button {
   border-radius: 16px;
 
   background:
-    linear-gradient(
-      145deg,
+    linear-gradient(145deg,
       rgba(255, 255, 255, 0.12),
-      rgba(255, 255, 255, 0.03)
-    ),
-    linear-gradient(
-      145deg,
+      rgba(255, 255, 255, 0.03)),
+    linear-gradient(145deg,
       #37206b,
-      #18112e
-    );
+      #18112e);
 
   box-shadow:
     0 20px 45px rgba(0, 0, 0, 0.4),
@@ -365,14 +349,12 @@ button {
 
 .home-card--left {
   transform:
-    translateX(-72%)
-    rotate(-14deg);
+    translateX(-72%) rotate(-14deg);
 }
 
 .home-card--right {
   transform:
-    translateX(-28%)
-    rotate(14deg);
+    translateX(-28%) rotate(14deg);
 }
 
 .home-card--center {
@@ -383,8 +365,7 @@ button {
   justify-content: center;
 
   transform:
-    translateX(-50%)
-    translateY(-10px);
+    translateX(-50%) translateY(-10px);
 }
 
 .home-card--center span {
@@ -470,17 +451,13 @@ button {
   padding: 40px 16px 80px;
 
   background:
-    radial-gradient(
-      circle at 50% 0%,
+    radial-gradient(circle at 50% 0%,
       rgba(108, 71, 255, 0.24),
-      transparent 35%
-    ),
-    linear-gradient(
-      180deg,
+      transparent 35%),
+    linear-gradient(180deg,
       #12101f 0%,
       #080a13 45%,
-      #05060c 100%
-    );
+      #05060c 100%);
 
   color: #ffffff;
 }
@@ -530,11 +507,9 @@ button {
 }
 
 .game-header h1 {
-  font-size: clamp(
-    32px,
-    7vw,
-    56px
-  );
+  font-size: clamp(32px,
+      7vw,
+      56px);
 
   line-height: 1.05;
 
@@ -576,7 +551,7 @@ button {
   background: rgba(255, 255, 255, 0.05);
 }
 
-.game-status > span {
+.game-status>span {
   color: rgba(255, 255, 255, 0.5);
 
   font-size: 12px;
@@ -696,8 +671,7 @@ button {
   align-items: center;
   justify-content: center;
 
-  border: 2px dashed
-    rgba(255, 255, 255, 0.12);
+  border: 2px dashed rgba(255, 255, 255, 0.12);
 
   border-radius: 18px;
 
@@ -723,15 +697,10 @@ button {
   inset: 0;
 
   animation:
-    draw-card-move
-    var(--draw-duration)
-    cubic-bezier(
-      0.22,
+    draw-card-move var(--draw-duration) cubic-bezier(0.22,
       1,
       0.36,
-      1
-    )
-    both;
+      1) both;
 }
 
 
@@ -749,10 +718,7 @@ button {
     preserve-3d;
 
   animation:
-    draw-card-flip
-    var(--draw-duration)
-    ease-in-out
-    both;
+    draw-card-flip var(--draw-duration) ease-in-out both;
 }
 
 
@@ -785,10 +751,8 @@ button {
   khi Card nằm trong stage.
 */
 
-.drawn-card__face
-.playing-card,
-.drawn-card__revealed
-.playing-card {
+.drawn-card__face .playing-card,
+.drawn-card__revealed .playing-card {
   width: 100%;
   height: 100%;
 
@@ -805,10 +769,7 @@ button {
   inset: 0;
 
   animation:
-    revealed-card
-    220ms
-    ease-out
-    both;
+    revealed-card 220ms ease-out both;
 }
 
 
@@ -816,38 +777,88 @@ button {
    CARD MOVE ANIMATION
 ========================================= */
 
-@keyframes draw-card-move {
-  /*
-    Card bắt đầu từ phía dưới
-    gần vị trí bộ bài.
-  */
+/* =========================================
+   EXACT CARD FLIGHT
+========================================= */
 
+.drawn-card__stage {
+  position: relative;
+
+  width: 180px;
+
+  aspect-ratio: 2 / 3;
+
+  margin-top: 22px;
+
+  perspective: 1200px;
+
+  /*
+    Bắt buộc để card có thể
+    bay xuyên qua layout.
+  */
+  overflow: visible;
+}
+
+
+.drawn-card__motion {
+  position: absolute;
+
+  inset: 0;
+
+  z-index: 100;
+
+  transform-origin:
+    center center;
+
+  will-change:
+    transform,
+    opacity;
+
+  animation:
+    draw-card-flight var(--draw-duration) cubic-bezier(0.22,
+      1,
+      0.36,
+      1) both;
+}
+
+
+/* =========================================
+   FROM REAL STACK POSITION
+   TO REAL REVEAL POSITION
+========================================= */
+
+@keyframes draw-card-flight {
   0% {
     transform:
-      translateY(220px)
-      scale(0.78);
+      translate3d(var(--draw-from-x),
+        var(--draw-from-y),
+        0) scale(var(--draw-from-scale));
 
-    opacity: 0;
-  }
-
-  12% {
     opacity: 1;
   }
 
   /*
-    Bay tới giữa.
+    Card tới reveal position.
   */
 
-  45% {
+  55% {
     transform:
-      translateY(0)
-      scale(1);
+      translate3d(0,
+        0,
+        0) scale(1);
+
+    opacity: 1;
   }
+
+  /*
+    Giữ nguyên để flip.
+  */
 
   100% {
     transform:
-      translateY(0)
-      scale(1);
+      translate3d(0,
+        0,
+        0) scale(1);
 
     opacity: 1;
   }
@@ -860,22 +871,22 @@ button {
 
 @keyframes draw-card-flip {
   /*
-    Trong lúc card đang bay,
-    vẫn hiển thị mặt sau.
+    Trong lúc bay:
+    card vẫn úp.
   */
 
   0%,
-  48% {
+  54% {
     transform:
       rotateY(0deg);
   }
 
   /*
-    Khi card tới giữa
-    thì bắt đầu flip.
+    Sau khi tới vùng reveal:
+    bắt đầu flip.
   */
 
-  78%,
+  88%,
   100% {
     transform:
       rotateY(180deg);
@@ -944,11 +955,7 @@ button {
 
 .card-stack__item--drawing {
   animation:
-    stack-card-leave
-    380ms
-    ease-out
-    100ms
-    forwards;
+    stack-card-leave 380ms ease-out 100ms forwards;
 }
 
 @keyframes stack-card-leave {
@@ -1106,11 +1113,9 @@ button {
 }
 
 .game-controls__button--draw {
-  background: linear-gradient(
-    135deg,
-    #8459ff,
-    #d45dce
-  );
+  background: linear-gradient(135deg,
+      #8459ff,
+      #d45dce);
 
   color: #ffffff;
 
@@ -1227,9 +1232,7 @@ button {
   position: relative;
 
   width: 100%;
-  height: calc(
-    var(--deck-card-width) * 1.5 + 30px
-  );
+  height: calc(var(--deck-card-width) * 1.5 + 30px);
 
   margin-top: 8px;
 }
@@ -1252,13 +1255,8 @@ button {
   margin: 0 auto;
 
   transform:
-    translate(
-      var(--stack-x),
-      var(--stack-y)
-    )
-    rotate(
-      var(--stack-rotation)
-    );
+    translate(var(--stack-x),
+      var(--stack-y)) rotate(var(--stack-rotation));
 
   transform-origin:
     center center;
@@ -1274,15 +1272,10 @@ button {
 
 .card-stack__item--shuffling {
   animation:
-    shuffle-card
-    var(--shuffle-duration)
-    cubic-bezier(
-      0.4,
+    shuffle-card var(--shuffle-duration) cubic-bezier(0.4,
       0,
       0.2,
-      1
-    )
-    both;
+      1) both;
 
   pointer-events: none;
 }
@@ -1295,13 +1288,8 @@ button {
 
   0% {
     transform:
-      translate(
-        var(--stack-x),
-        var(--stack-y)
-      )
-      rotate(
-        var(--stack-rotation)
-      );
+      translate(var(--stack-x),
+        var(--stack-y)) rotate(var(--stack-rotation));
   }
 
   /*
@@ -1312,13 +1300,8 @@ button {
 
   20% {
     transform:
-      translate(
-        var(--shuffle-x-1),
-        var(--shuffle-y-1)
-      )
-      rotate(
-        var(--shuffle-r-1)
-      );
+      translate(var(--shuffle-x-1),
+        var(--shuffle-y-1)) rotate(var(--shuffle-r-1));
   }
 
   /*
@@ -1329,13 +1312,8 @@ button {
 
   43% {
     transform:
-      translate(
-        var(--shuffle-x-2),
-        var(--shuffle-y-2)
-      )
-      rotate(
-        var(--shuffle-r-2)
-      );
+      translate(var(--shuffle-x-2),
+        var(--shuffle-y-2)) rotate(var(--shuffle-r-2));
   }
 
   /*
@@ -1347,16 +1325,8 @@ button {
 
   64% {
     transform:
-      translate(
-        var(--shuffle-x-1),
-        calc(
-          var(--shuffle-y-1)
-          * -0.5
-        )
-      )
-      rotate(
-        var(--shuffle-r-1)
-      );
+      translate(var(--shuffle-x-1),
+        calc(var(--shuffle-y-1) * -0.5)) rotate(var(--shuffle-r-1));
   }
 
   /*
@@ -1367,13 +1337,8 @@ button {
 
   82% {
     transform:
-      translate(
-        var(--shuffle-x-3),
-        var(--shuffle-y-3)
-      )
-      rotate(
-        var(--shuffle-r-3)
-      );
+      translate(var(--shuffle-x-3),
+        var(--shuffle-y-3)) rotate(var(--shuffle-r-3));
   }
 
   /*
@@ -1383,23 +1348,14 @@ button {
 
   100% {
     transform:
-      translate(
-        var(--stack-x),
-        var(--stack-y)
-      )
-      rotate(
-        var(--stack-rotation)
-      );
+      translate(var(--stack-x),
+        var(--stack-y)) rotate(var(--stack-rotation));
   }
 }
 
-.drawn-card__placeholder--shuffling
-span {
+.drawn-card__placeholder--shuffling span {
   animation:
-    shuffle-icon
-    700ms
-    linear
-    infinite;
+    shuffle-icon 700ms linear infinite;
 }
 
 @keyframes shuffle-icon {
@@ -1493,6 +1449,151 @@ span {
 
 
 /* =========================================
+   GAME STAGE
+========================================= */
+
+.game-stage {
+  display: grid;
+
+  grid-template-columns:
+    minmax(0, 1fr);
+
+  grid-template-areas:
+    "reveal"
+    "controls"
+    "deck";
+
+  gap: 36px;
+
+  width: 100%;
+
+  margin-top: 42px;
+
+  align-items: center;
+}
+
+
+/* =========================================
+   REVEAL AREA
+========================================= */
+
+.game-stage__reveal {
+  grid-area: reveal;
+
+  position: relative;
+
+  z-index: 10;
+
+  display: flex;
+  justify-content: center;
+
+  min-width: 0;
+}
+
+
+/* =========================================
+   CONTROLS AREA
+========================================= */
+
+.game-stage__controls {
+  grid-area: controls;
+
+  position: relative;
+
+  z-index: 20;
+}
+
+.game-stage__controls .game-controls {
+  margin-top: 0;
+}
+
+
+/* =========================================
+   DECK AREA
+========================================= */
+
+.game-stage__deck {
+  grid-area: deck;
+
+  position: relative;
+
+  z-index: 1;
+
+  min-width: 0;
+}
+
+.game-stage__deck-header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+
+  width: 100%;
+  max-width: 420px;
+
+  margin: 0 auto 20px;
+}
+
+.game-stage__deck-header span {
+  color: #a88dff;
+
+  font-size: 10px;
+  font-weight: 700;
+
+  letter-spacing: 1.5px;
+}
+
+.game-stage__deck-header h2 {
+  margin-top: 4px;
+
+  font-size: 18px;
+}
+
+.game-stage__deck-header strong {
+  color:
+    rgba(255, 255, 255, 0.6);
+
+  font-size: 13px;
+}
+
+
+/* =========================================
+   DESKTOP GAME STAGE
+========================================= */
+
+@media (min-width: 900px) {
+  .game-stage {
+    grid-template-columns:
+      minmax(300px, 1fr) minmax(300px, 1fr);
+
+    grid-template-areas:
+      "deck reveal"
+      "controls controls";
+
+    column-gap: 80px;
+
+    row-gap: 42px;
+
+    min-height: 480px;
+
+    margin-top: 48px;
+  }
+
+  .game-stage__deck,
+  .game-stage__reveal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    min-height: 400px;
+  }
+
+  .game-stage__controls {
+    display: flex;
+    justify-content: center;
+  }
+}
+
+/* =========================================
    MOBILE
 ========================================= */
 
@@ -1500,9 +1601,7 @@ span {
   .card-stack {
     --deck-card-width: 150px;
 
-    height: calc(
-      var(--deck-card-width) * 1.5 + 30px
-    );
+    height: calc(var(--deck-card-width) * 1.5 + 30px);
   }
 }
 
@@ -1511,11 +1610,7 @@ span {
    TABLET
 ========================================= */
 
-@media (
-  min-width: 600px
-) and (
-  max-width: 899px
-) {
+@media (min-width: 600px) and (max-width: 899px) {
   .card-stack {
     --deck-card-width: 180px;
   }
@@ -1530,9 +1625,7 @@ span {
   .card-stack {
     --deck-card-width: 210px;
 
-    height: calc(
-      var(--deck-card-width) * 1.5 + 35px
-    );
+    height: calc(var(--deck-card-width) * 1.5 + 35px);
   }
 }
 
