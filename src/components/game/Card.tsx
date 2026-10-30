@@ -41,12 +41,6 @@ export default function Card({
         className="playing-card__image"
         priority={false}
       />
-
-      {isFront && (
-        <div className="playing-card__content">
-          <p>{card.content}</p>
-        </div>
-      )}
     </div>
   );
 }

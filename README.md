@@ -156,7 +156,6 @@ Mỗi lá bài có cấu trúc:
 ```ts
 interface Card {
   id: number;          // ID duy nhất
-  content: string;     // Nội dung hiển thị trên mặt trước
   frontImage: string;  // Ảnh mặt trước
   backImage: string;   // Ảnh mặt sau
 }

@@ -1024,43 +1024,6 @@ button {
     0 24px 60px rgba(0, 0, 0, 0.45);
 }
 
-
-/* =========================================
-   CARD CONTENT
-========================================= */
-
-.playing-card__content {
-  position: absolute;
-
-  left: 12px;
-  right: 12px;
-  bottom: 16px;
-
-  z-index: 2;
-
-  padding: 10px 12px;
-
-  border-radius: 10px;
-
-  background: rgba(0, 0, 0, 0.55);
-
-  backdrop-filter: blur(6px);
-
-  text-align: center;
-}
-
-.playing-card__content p {
-  margin: 0;
-
-  color: #ffffff;
-
-  font-size: 13px;
-  font-weight: 600;
-
-  line-height: 1.45;
-}
-
-
 /* =========================================
    DESKTOP
 ========================================= */
@@ -1068,18 +1031,6 @@ button {
 @media (min-width: 768px) {
   .playing-card--front {
     width: 220px;
-  }
-
-  .playing-card__content {
-    left: 16px;
-    right: 16px;
-    bottom: 20px;
-
-    padding: 12px 14px;
-  }
-
-  .playing-card__content p {
-    font-size: 14px;
   }
 }
 
