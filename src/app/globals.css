@@ -1123,7 +1123,7 @@ button {
 ========================================= */
 
 .card-stack {
-  --deck-card-width: 180px;
+  --deck-card-width: 140px;
 
   position: relative;
 
@@ -1394,7 +1394,7 @@ button {
 
   z-index: 30;
 
-  width: 180px;
+  width: 140px;
 
   min-width: 0;
 }
@@ -1473,11 +1473,11 @@ button {
   }
 
   .game-stage__deck {
-    width: 110px;
+    width: 90px;
   }
 
   .drawn-card {
-    margin-top: 180px;
+    margin-top: 100px;
   }
 
   .drawn-card__header h2 {
@@ -1517,7 +1517,7 @@ button {
   }
 
   .card-stack {
-    --deck-card-width: 110px;
+    --deck-card-width: 90px;
 
     height: calc(var(--deck-card-width) * 1.5 + 20px);
   }
@@ -1530,11 +1530,11 @@ button {
 
 @media (min-width: 600px) and (max-width: 899px) {
   .card-stack {
-    --deck-card-width: 180px;
+    --deck-card-width: 140px;
   }
 
   .game-stage__deck {
-    width: 180px;
+    width: 140px;
   }
 }
 
@@ -1545,13 +1545,13 @@ button {
 
 @media (min-width: 900px) {
   .card-stack {
-    --deck-card-width: 210px;
+    --deck-card-width: 160px;
 
     height: calc(var(--deck-card-width) * 1.5 + 35px);
   }
 
   .game-stage__deck {
-    width: 210px;
+    width: 160px;
   }
 }
 
