@@ -42,9 +42,7 @@ export default function HomePage() {
       >
         <div className="home-card home-card--left" />
 
-        <div className="home-card home-card--center">
-          <span>?</span>
-        </div>
+        <div className="home-card home-card--center" />
 
         <div className="home-card home-card--right" />
       </div>

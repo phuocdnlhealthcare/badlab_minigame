@@ -47,7 +47,7 @@ html {
 
 body {
   min-height: 100vh;
-  background: #080b16;
+  background: #040707;
   color: #ffffff;
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -134,18 +134,18 @@ button {
 
   background:
     radial-gradient(circle at 50% 15%,
-      rgba(96, 70, 255, 0.35),
+      rgba(243, 111, 33, 0.28),
       transparent 40%),
     radial-gradient(circle at 15% 80%,
-      rgba(219, 44, 255, 0.18),
+      rgba(243, 111, 33, 0.14),
       transparent 35%),
     radial-gradient(circle at 90% 70%,
-      rgba(31, 110, 255, 0.18),
+      rgba(243, 111, 33, 0.14),
       transparent 35%),
     linear-gradient(180deg,
-      #15102a 0%,
-      #090b18 55%,
-      #050711 100%);
+      #0c1a1a 0%,
+      #040707 55%,
+      #020303 100%);
 }
 
 .home::before {
@@ -163,7 +163,7 @@ button {
 
   border-radius: 50%;
 
-  background: rgba(126, 87, 255, 0.25);
+  background: rgba(243, 111, 33, 0.22);
 
   filter: blur(80px);
 
@@ -230,9 +230,9 @@ button {
   letter-spacing: 1px;
 
   background: linear-gradient(90deg,
-      #f9ca6b,
-      #ff82da,
-      #9584ff);
+      #f36f21,
+      #f9a04d,
+      #f36f21);
 
   background-clip: text;
   -webkit-background-clip: text;
@@ -265,12 +265,12 @@ button {
   border-radius: 999px;
 
   background: linear-gradient(135deg,
-      #8258ff 0%,
-      #ab5dff 50%,
-      #e35ec8 100%);
+      #f36f21 0%,
+      #f9873f 50%,
+      #c95514 100%);
 
   box-shadow:
-    0 15px 40px rgba(133, 81, 255, 0.35),
+    0 15px 40px rgba(243, 111, 33, 0.35),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 
   color: #ffffff;
@@ -285,7 +285,7 @@ button {
 
 .home__start-button:hover {
   box-shadow:
-    0 18px 50px rgba(133, 81, 255, 0.48),
+    0 18px 50px rgba(243, 111, 33, 0.48),
     inset 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
@@ -322,16 +322,13 @@ button {
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: 16px;
 
-  background:
-    linear-gradient(145deg,
-      rgba(255, 255, 255, 0.12),
-      rgba(255, 255, 255, 0.03)),
-    linear-gradient(145deg,
-      #37206b,
-      #18112e);
+  background-image: url("/images/cards/back/back_card.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
   box-shadow:
-    0 20px 45px rgba(0, 0, 0, 0.4),
+    0 20px 45px rgba(0, 0, 0, 0.55),
     inset 0 1px 0 rgba(255, 255, 255, 0.15);
 
   transform-origin: bottom center;
@@ -360,31 +357,8 @@ button {
 .home-card--center {
   z-index: 2;
 
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
   transform:
     translateX(-50%) translateY(-10px);
-}
-
-.home-card--center span {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  width: 60px;
-  height: 60px;
-
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 50%;
-
-  background: rgba(255, 255, 255, 0.07);
-
-  font-size: 32px;
-  font-weight: 800;
-
-  color: rgba(255, 255, 255, 0.75);
 }
 
 /* ================================
