@@ -36,8 +36,6 @@ export default function GameBoard() {
 
     phase,
 
-    remainingCards,
-
     isDrawing,
 
     isShuffling,
@@ -181,134 +179,89 @@ export default function GameBoard() {
   return (
     <main className="game-page">
       <div className="game-page__container">
-        <header className="game-header">
-          <span className="game-header__badge">
-            BADLAB MINIGAME
-          </span>
+        {/* DECK — góc trên bên trái */}
 
-          <h1>
-            Rút một lá bài
-          </h1>
+        <section className="game-stage__deck">
+          <div className="game-stage__deck-header">
+            <span>
+              BỘ BÀI
+            </span>
 
-          <p>
-            Hãy thử vận may và khám phá
-            lá bài dành cho bạn.
-          </p>
-        </header>
-
-        <div className="game-status">
-          <span>
-            {isShuffling
-              ? "Đang xào bài"
-              : "Số bài còn lại"}
-          </span>
-
-          <strong>
-            {remainingCards}
-
-            <small>
-              /
+            <strong>
+              {deck.length}/
               {
                 GAME_CONFIG
                   .TOTAL_CARDS
               }
-            </small>
-          </strong>
+            </strong>
+          </div>
+
+          <CardDeck
+            cards={deck}
+            drawingCardId={
+              selectedCard?.id ??
+              null
+            }
+            isShuffling={
+              isShuffling
+            }
+            shuffleDuration={
+              GAME_CONFIG
+                .SHUFFLE_ANIMATION_MS
+            }
+            registerCardRef={
+              registerCardRef
+            }
+          />
+        </section>
+
+        {/* REVEAL — lá bài rút được ở giữa */}
+
+        <div className="game-stage__reveal">
+          <DrawnCard
+            selectedCard={
+              selectedCard
+            }
+            drawnCard={
+              drawnCard
+            }
+            phase={phase}
+            animationDuration={
+              GAME_CONFIG
+                .DRAW_ANIMATION_MS
+            }
+            stageRef={
+              revealStageRef
+            }
+            drawMotion={
+              drawMotion
+            }
+          />
         </div>
 
-        {/* GAME STAGE */}
+        {/* CONTROLS — dưới cùng */}
 
-        <div className="game-stage">
-          {/* REVEAL */}
-
-          <div className="game-stage__reveal">
-            <DrawnCard
-              selectedCard={
-                selectedCard
-              }
-              drawnCard={
-                drawnCard
-              }
-              phase={phase}
-              animationDuration={
-                GAME_CONFIG
-                  .DRAW_ANIMATION_MS
-              }
-              stageRef={
-                revealStageRef
-              }
-              drawMotion={
-                drawMotion
-              }
-            />
-          </div>
-
-          {/* CONTROLS */}
-
-          <div className="game-stage__controls">
-            <GameControls
-              onDraw={
-                handleDraw
-              }
-              onShuffle={
-                handleShuffle
-              }
-              canDraw={
-                canDraw
-              }
-              canShuffle={
-                canShuffle
-              }
-              isDrawing={
-                isDrawing
-              }
-              isShuffling={
-                isShuffling
-              }
-            />
-          </div>
-
-          {/* DECK */}
-
-          <section className="game-stage__deck">
-            <div className="game-stage__deck-header">
-              <div>
-                <span>
-                  BỘ BÀI
-                </span>
-
-                <h2>
-                  Bộ bài còn lại
-                </h2>
-              </div>
-
-              <strong>
-                {remainingCards}/
-                {
-                  GAME_CONFIG
-                    .TOTAL_CARDS
-                }
-              </strong>
-            </div>
-
-            <CardDeck
-              cards={deck}
-              drawingCardId={
-                selectedCard?.id ??
-                null
-              }
-              isShuffling={
-                isShuffling
-              }
-              shuffleDuration={
-                GAME_CONFIG
-                  .SHUFFLE_ANIMATION_MS
-              }
-              registerCardRef={
-                registerCardRef
-              }
-            />
-          </section>
+        <div className="game-stage__controls">
+          <GameControls
+            onDraw={
+              handleDraw
+            }
+            onShuffle={
+              handleShuffle
+            }
+            canDraw={
+              canDraw
+            }
+            canShuffle={
+              canShuffle
+            }
+            isDrawing={
+              isDrawing
+            }
+            isShuffling={
+              isShuffling
+            }
+          />
         </div>
       </div>
     </main>

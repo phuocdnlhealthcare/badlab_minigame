@@ -229,26 +229,6 @@ export default function CardDeck({
                     }
                 )}
             </div>
-
-            <p className="card-stack__count">
-                {isShuffling ? (
-                    <>
-                        Đang xào{" "}
-                        <strong>
-                            {cards.length}
-                        </strong>{" "}
-                        lá bài...
-                    </>
-                ) : (
-                    <>
-                        Còn{" "}
-                        <strong>
-                            {cards.length}
-                        </strong>{" "}
-                        lá bài
-                    </>
-                )}
-            </p>
         </section>
     );
 }

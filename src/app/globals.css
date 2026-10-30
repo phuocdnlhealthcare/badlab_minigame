@@ -419,10 +419,12 @@ button {
 ========================================= */
 
 .game-page {
+  position: relative;
+
   width: 100%;
   min-height: 100dvh;
 
-  padding: 40px 16px 80px;
+  padding: 20px 20px 28px;
 
   background:
     radial-gradient(circle at 50% 0%,
@@ -437,8 +439,16 @@ button {
 }
 
 .game-page__container {
+  position: relative;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+
   width: 100%;
   max-width: 1180px;
+  min-height: calc(100dvh - 48px);
 
   margin: 0 auto;
 }
@@ -562,26 +572,19 @@ button {
   flex-direction: column;
   align-items: center;
 
-  margin-top: 40px;
+  margin-top: 0;
 }
 
 .drawn-card__header {
   text-align: center;
 }
 
-.drawn-card__header span {
-  color: #f36f21;
+.drawn-card__header h2 {
+  font-size: 16px;
 
-  font-size: 11px;
   font-weight: 700;
 
-  letter-spacing: 1.5px;
-}
-
-.drawn-card__header h2 {
-  margin-top: 6px;
-
-  font-size: 20px;
+  color: rgba(255, 255, 255, 0.7);
 }
 
 /* =========================================
@@ -591,11 +594,11 @@ button {
 .drawn-card__stage {
   position: relative;
 
-  width: 180px;
+  width: 200px;
 
   aspect-ratio: 2 / 3;
 
-  margin-top: 22px;
+  margin-top: 0;
 
   perspective: 1200px;
 }
@@ -726,11 +729,11 @@ button {
 .drawn-card__stage {
   position: relative;
 
-  width: 180px;
+  width: 200px;
 
   aspect-ratio: 2 / 3;
 
-  margin-top: 22px;
+  margin-top: 0;
 
   perspective: 1200px;
 
@@ -863,7 +866,7 @@ button {
 
 @media (min-width: 768px) {
   .drawn-card__stage {
-    width: 220px;
+    width: 240px;
   }
 }
 
@@ -1340,47 +1343,25 @@ button {
   line-height: 1.6;
 }
 
-
-/* =========================================
-   GAME STAGE
-========================================= */
-
-.game-stage {
-  display: grid;
-
-  grid-template-columns:
-    minmax(0, 1fr);
-
-  grid-template-areas:
-    "reveal"
-    "controls"
-    "deck";
-
-  gap: 36px;
-
-  width: 100%;
-
-  margin-top: 42px;
-
-  align-items: center;
-}
-
-
 /* =========================================
    REVEAL AREA
 ========================================= */
 
 .game-stage__reveal {
-  grid-area: reveal;
-
   position: relative;
 
   z-index: 10;
 
   display: flex;
   justify-content: center;
+  align-items: center;
 
+  flex: 1;
+
+  width: 100%;
   min-width: 0;
+
+  padding: 20px 0;
 }
 
 
@@ -1389,11 +1370,11 @@ button {
 ========================================= */
 
 .game-stage__controls {
-  grid-area: controls;
-
   position: relative;
 
   z-index: 20;
+
+  width: 100%;
 }
 
 .game-stage__controls .game-controls {
@@ -1406,24 +1387,27 @@ button {
 ========================================= */
 
 .game-stage__deck {
-  grid-area: deck;
+  position: absolute;
 
-  position: relative;
+  top: 0;
+  left: 0;
 
-  z-index: 1;
+  z-index: 30;
+
+  width: 180px;
 
   min-width: 0;
 }
 
 .game-stage__deck-header {
   display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
 
-  width: 100%;
-  max-width: 420px;
+  width: max-content;
+  max-width: 220px;
 
-  margin: 0 auto 20px;
+  margin: 0 0 8px;
 }
 
 .game-stage__deck-header span {
@@ -1435,17 +1419,11 @@ button {
   letter-spacing: 1.5px;
 }
 
-.game-stage__deck-header h2 {
-  margin-top: 4px;
-
-  font-size: 18px;
-}
-
 .game-stage__deck-header strong {
   color:
-    rgba(255, 255, 255, 0.6);
+    rgba(255, 255, 255, 0.7);
 
-  font-size: 13px;
+  font-size: 12px;
 }
 
 
@@ -1454,32 +1432,6 @@ button {
 ========================================= */
 
 @media (min-width: 900px) {
-  .game-stage {
-    grid-template-columns:
-      minmax(300px, 1fr) minmax(300px, 1fr);
-
-    grid-template-areas:
-      "deck reveal"
-      "controls controls";
-
-    column-gap: 80px;
-
-    row-gap: 42px;
-
-    min-height: 480px;
-
-    margin-top: 48px;
-  }
-
-  .game-stage__deck,
-  .game-stage__reveal {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
-    min-height: 400px;
-  }
-
   .game-stage__controls {
     display: flex;
     justify-content: center;
@@ -1502,63 +1454,23 @@ button {
   .game-page__container {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
   }
 
-  .game-header__badge {
-    margin-bottom: 8px;
-
-    padding: 5px 11px;
-
-    font-size: 9px;
-
-    letter-spacing: 1.2px;
-  }
-
-  .game-header h1 {
-    font-size: 26px;
-  }
-
-  .game-header p {
-    display: none;
-  }
-
-  .game-status {
-    margin: 12px auto 0;
-
-    padding: 8px 18px;
-  }
-
-  .game-status strong {
-    font-size: 22px;
-  }
-
-  .game-status small {
-    font-size: 13px;
-  }
-
-  .game-stage {
-    gap: 14px;
-
-    margin-top: 14px;
+  .game-stage__deck {
+    width: 110px;
   }
 
   .drawn-card {
     margin-top: 0;
   }
 
-  .drawn-card__header span {
-    font-size: 9px;
-  }
-
   .drawn-card__header h2 {
-    font-size: 15px;
+    font-size: 14px;
   }
 
   .drawn-card__stage {
-    width: 120px;
-
-    margin-top: 10px;
+    width: 160px;
   }
 
   .game-controls {
@@ -1576,19 +1488,19 @@ button {
   }
 
   .game-stage__deck-header {
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
 
   .game-stage__deck-header span {
     font-size: 9px;
   }
 
-  .game-stage__deck-header h2 {
-    font-size: 15px;
+  .game-stage__deck-header strong {
+    font-size: 11px;
   }
 
   .card-stack {
-    --deck-card-width: 120px;
+    --deck-card-width: 110px;
 
     height: calc(var(--deck-card-width) * 1.5 + 20px);
   }
@@ -1603,6 +1515,10 @@ button {
   .card-stack {
     --deck-card-width: 180px;
   }
+
+  .game-stage__deck {
+    width: 180px;
+  }
 }
 
 
@@ -1615,6 +1531,10 @@ button {
     --deck-card-width: 210px;
 
     height: calc(var(--deck-card-width) * 1.5 + 35px);
+  }
+
+  .game-stage__deck {
+    width: 210px;
   }
 }
 
@@ -1636,10 +1556,6 @@ button {
 ========================================= */
 
 @media (min-width: 900px) {
-  .game-page {
-    padding-top: 60px;
-  }
-
   .playing-card--front {
     width: 200px;
   }

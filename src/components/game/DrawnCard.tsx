@@ -99,10 +99,6 @@ export default function DrawnCard({
             aria-live="polite"
         >
             <div className="drawn-card__header">
-                <span>
-                    LÁ BÀI CỦA BẠN
-                </span>
-
                 <h2>
                     {getTitle()}
                 </h2>
